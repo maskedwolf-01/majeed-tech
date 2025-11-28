@@ -3,13 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Majeed | Enterprise Solutions</title>
+    <title>Majeed | The Future of Diagnostics</title>
     
     <script src="https://cdn.tailwindcss.com"></script>
     
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Playfair+Display:ital,wght@1,500&display=swap" rel="stylesheet">
     
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
@@ -18,303 +18,364 @@
             theme: {
                 extend: {
                     fontFamily: {
-                        // This stack mimics Apple's native font (San Francisco)
-                        sans: ['-apple-system', 'BlinkMacSystemFont', 'Inter', 'Segoe UI', 'Roboto', 'sans-serif'],
+                        sans: ['Inter', 'sans-serif'],
+                        serif: ['Playfair Display', 'serif'],
                     },
                     colors: {
-                        // Premium, De-saturated Palette
-                        'rich-black': '#050507',
-                        'charcoal': '#151516',
-                        'apple-blue': '#2997FF', // Apple's exact link blue
-                        'gunmetal': '#86868b',   // Apple's text gray
+                        'obsidian': '#050505',
+                        'charcoal': '#0f0f10',
+                        'electric-blue': '#2997FF', 
+                        'platinum': '#E5E5E7',
                     },
-                    backgroundImage: {
-                        'gradient-radial': 'radial-gradient(var(--tw-gradient-stops))',
+                    animation: {
+                        'scroll': 'scroll 20s linear infinite',
+                    },
+                    keyframes: {
+                        scroll: {
+                            '0%': { transform: 'translateX(0)' },
+                            '100%': { transform: 'translateX(-100%)' },
+                        }
                     }
                 }
             }
         }
     </script>
     <style>
-        /* Apple-style Glass Effect */
-        .glass-panel {
-            background: rgba(21, 21, 22, 0.6);
-            backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
-            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        /* Texture Overlay */
+        .bg-noise {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            pointer-events: none; z-index: 50; opacity: 0.03;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
         }
-        
-        /* Smooth, heavy scrolling like iOS */
-        html { scroll-behavior: smooth; }
-        
-        /* Hide scrollbar but keep functionality */
-        ::-webkit-scrollbar { width: 0px; background: transparent; }
-        
-        /* Subtle Fade In Animation */
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(10px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-        .animate-fade { animation: fadeIn 0.8s ease-out forwards; }
+        /* Reveal Animation */
+        .reveal { opacity: 0; transform: translateY(30px); transition: all 1s cubic-bezier(0.5, 0, 0, 1); }
+        .reveal.active { opacity: 1; transform: translateY(0); }
+        ::-webkit-scrollbar { width: 0px; }
     </style>
 </head>
-<body class="bg-rich-black text-white font-sans antialiased selection:bg-apple-blue selection:text-white">
+<body class="bg-obsidian text-platinum antialiased overflow-x-hidden">
 
-    <nav class="fixed w-full z-50 glass-panel transition-all duration-300">
-        <div class="max-w-7xl mx-auto px-6 h-14 flex justify-between items-center">
-            <div class="flex items-center gap-1 cursor-pointer">
-                <i class="fas fa-cube text-white text-lg"></i>
-                <span class="font-semibold tracking-tight text-white ml-2">Majeed</span>
+    <div class="bg-noise"></div>
+
+    <nav class="fixed w-full z-[60] border-b border-white/5 bg-obsidian/70 backdrop-blur-xl transition-all duration-300">
+        <div class="max-w-7xl mx-auto px-6 h-16 flex justify-between items-center">
+            <div class="flex items-center gap-3">
+                <div class="w-8 h-8 bg-gradient-to-tr from-white to-gray-500 rounded-lg flex items-center justify-center">
+                    <i class="fas fa-microchip text-black text-sm"></i>
+                </div>
+                <span class="font-medium tracking-tight text-white">Majeed</span>
             </div>
             
-            <div class="hidden md:flex gap-10 text-xs font-medium text-gray-300">
-                <a href="#solutions" class="hover:text-white transition-colors">Solutions</a>
+            <div class="hidden md:flex gap-8 text-xs font-medium tracking-wide text-gray-400">
+                <a href="#ecosystem" class="hover:text-white transition-colors">Ecosystem</a>
                 <a href="#hardware" class="hover:text-white transition-colors">Hardware</a>
-                <a href="#support" class="hover:text-white transition-colors">Support</a>
+                <a href="#vision" class="hover:text-white transition-colors">Vision</a>
             </div>
 
             <button onclick="toggleCart()" class="relative group">
-                <i class="fas fa-bag-shopping text-gray-300 hover:text-white transition-colors"></i>
-                <span id="cart-dot" class="absolute -top-1 -right-1 w-2 h-2 bg-apple-blue rounded-full opacity-0 transition-opacity"></span>
+                <div class="px-4 py-2 bg-white/5 rounded-full border border-white/5 hover:border-white/20 transition-all text-xs font-medium flex items-center gap-2">
+                    <span>Bag</span>
+                    <span id="cart-count" class="bg-electric-blue text-white w-4 h-4 rounded-full flex items-center justify-center text-[9px] opacity-0 transition-opacity">0</span>
+                </div>
             </button>
         </div>
     </nav>
+        <header class="relative pt-40 pb-20 px-6 min-h-screen flex flex-col justify-center overflow-hidden">
+        <div class="absolute top-0 left-1/2 -translate-x-1/2 w-[600px] h-[600px] bg-electric-blue/10 rounded-full blur-[150px] pointer-events-none"></div>
 
-    <header class="relative pt-32 pb-20 px-6 overflow-hidden">
-        <div class="max-w-4xl mx-auto text-center relative z-10 animate-fade">
-            <h2 class="text-apple-blue font-semibold text-xl mb-4 tracking-wide">Enterprise Grade.</h2>
-            <h1 class="text-5xl md:text-7xl font-semibold leading-tight mb-6 bg-clip-text text-transparent bg-gradient-to-b from-white to-gray-400">
-                Troubleshooting <br> Reimagined.
-            </h1>
-            <p class="text-gunmetal text-lg md:text-xl max-w-2xl mx-auto mb-10 leading-relaxed">
-                Majeed Comparations provides the diagnostic infrastructure for the next generation of computing. Chip-level precision.
-            </p>
-            <div class="flex gap-4 justify-center">
-                <a href="#hardware" class="bg-apple-blue text-white px-8 py-3 rounded-full text-sm font-medium hover:bg-blue-500 transition-all">Buy Hardware</a>
-                <a href="#solutions" class="text-apple-blue px-8 py-3 text-sm font-medium hover:underline flex items-center gap-1">Learn more <i class="fas fa-chevron-right text-xs"></i></a>
+        <div class="max-w-5xl mx-auto text-center relative z-10">
+            <div class="reveal">
+                <span class="text-electric-blue text-xs font-bold tracking-[0.2em] uppercase mb-6 block">System Architecture V.2.0</span>
+                <h1 class="text-6xl md:text-8xl font-semibold tracking-tighter leading-[0.9] mb-8 bg-clip-text text-transparent bg-gradient-to-b from-white via-white to-gray-600">
+                    Precision <br> is a Language.
+                </h1>
+            </div>
+            <div class="reveal" style="transition-delay: 100ms;">
+                <p class="text-gray-400 text-lg md:text-xl max-w-2xl mx-auto mb-10 font-light leading-relaxed">
+                    We don't just fix technology; we re-engineer it. Majeed Comparations defines the standard for enterprise diagnostic integrity.
+                </p>
+                <div class="flex flex-col sm:flex-row gap-4 justify-center">
+                    <a href="#hardware" class="group relative px-8 py-3 bg-white text-black rounded-full font-medium overflow-hidden">
+                        <span class="relative z-10 group-hover:text-electric-blue transition-colors">Configure System</span>
+                        <div class="absolute inset-0 bg-gray-200 transform scale-x-0 group-hover:scale-x-100 transition-transform origin-left"></div>
+                    </a>
+                    <a href="#vision" class="px-8 py-3 border border-white/10 rounded-full font-medium hover:bg-white/5 transition-all">Read the Manifesto</a>
+                </div>
             </div>
         </div>
-        
-        <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[400px] bg-blue-900/20 blur-[120px] rounded-full -z-10"></div>
-    </header>
 
-    <section id="hardware" class="py-20 bg-charcoal">
-        <div class="max-w-7xl mx-auto px-6">
-            <h3 class="text-3xl font-semibold mb-12 text-center">Pro Hardware.</h3>
-            
-            <div class="flex justify-center gap-4 mb-16">
-                <button onclick="filter('all')" class="text-xs font-medium bg-white text-black px-4 py-2 rounded-full">All</button>
-                <button onclick="filter('systems')" class="text-xs font-medium text-gray-400 hover:text-white px-4 py-2 transition-colors">Systems</button>
-                <button onclick="filter('components')" class="text-xs font-medium text-gray-400 hover:text-white px-4 py-2 transition-colors">Components</button>
+        <div class="mt-24 w-full overflow-hidden border-y border-white/5 py-8 bg-black/20 backdrop-blur-sm reveal" style="transition-delay: 300ms;">
+            <div class="flex whitespace-nowrap animate-scroll gap-16 items-center opacity-50 grayscale">
+                <i class="fab fa-apple text-3xl"></i>
+                <i class="fab fa-google text-3xl"></i>
+                <i class="fab fa-microsoft text-3xl"></i>
+                <i class="fab fa-aws text-3xl"></i>
+                <i class="fab fa-intel text-3xl"></i>
+                <i class="fas fa-microchip text-3xl"></i>
+                <i class="fab fa-apple text-3xl"></i>
+                <i class="fab fa-google text-3xl"></i>
+                <i class="fab fa-microsoft text-3xl"></i>
+                <i class="fab fa-aws text-3xl"></i>
+                <i class="fab fa-intel text-3xl"></i>
+                <i class="fas fa-microchip text-3xl"></i>
             </div>
-
-            <div id="grid" class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-                </div>
         </div>
-    </section>
-
-    <section id="solutions" class="py-32 px-6 bg-rich-black">
-        <div class="max-w-5xl mx-auto">
-            <h3 class="text-4xl font-semibold mb-16 border-b border-white/10 pb-8">Services.</h3>
-            
-            <div class="grid md:grid-cols-2 gap-12">
-                <div>
-                    <h4 class="text-xl font-medium mb-2 text-white">Diagnostic Integrity</h4>
-                    <p class="text-gunmetal leading-relaxed">We utilize proprietary software to scan logic boards for micro-fractures and voltage irregularities. It’s not just repair; it’s restoration.</p>
-                </div>
-                <div>
-                    <h4 class="text-xl font-medium mb-2 text-white">Network Architecture</h4>
-                    <p class="text-gunmetal leading-relaxed">From server-side load balancing to mesh WiFi deployment, we build invisible, unbreakable connections for enterprise environments.</p>
-                </div>
-                <div>
-                    <h4 class="text-xl font-medium mb-2 text-white">Data Recovery</h4>
-                    <p class="text-gunmetal leading-relaxed">Advanced forensic tools allow us to recover lost sectors from SSDs and HDDs that others consider dead.</p>
-                </div>
-                <div>
-                    <h4 class="text-xl font-medium mb-2 text-white">System Optimization</h4>
-                    <p class="text-gunmetal leading-relaxed">Kernel-level debugging to ensure your hardware runs at peak thermal and computational efficiency.</p>
+        </header>
+            <section id="hardware" class="py-32 px-6">
+        <div class="max-w-7xl mx-auto">
+            <div class="flex justify-between items-end mb-16 reveal">
+                <h2 class="text-4xl font-semibold">Inventory.</h2>
+                <div class="flex gap-2">
+                    <button class="w-10 h-10 border border-white/10 rounded-full flex items-center justify-center hover:bg-white hover:text-black transition-all"><i class="fas fa-chevron-left"></i></button>
+                    <button class="w-10 h-10 border border-white/10 rounded-full flex items-center justify-center hover:bg-white hover:text-black transition-all"><i class="fas fa-chevron-right"></i></button>
                 </div>
             </div>
+
+            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6" id="grid">
+                </div>
         </div>
     </section>
 
-    <footer class="bg-charcoal py-12 px-6 border-t border-white/5">
-        <div class="max-w-7xl mx-auto text-xs text-gunmetal flex flex-col md:flex-row justify-between items-center gap-4">
-            <p>Copyright © 2025 Majeed Comparations Inc. All rights reserved.</p>
-            <div class="flex gap-6">
-                <a href="#" class="hover:underline">Privacy Policy</a>
-                <a href="#" class="hover:underline">Terms of Use</a>
-                <a href="#" class="hover:underline">Sales and Refunds</a>
+    <section id="vision" class="py-32 bg-charcoal relative overflow-hidden">
+        <div class="absolute top-0 right-0 w-[500px] h-[500px] bg-gradient-to-b from-electric-blue/5 to-transparent rounded-full blur-[100px]"></div>
+        <div class="max-w-4xl mx-auto px-6 relative z-10 text-center">
+            <i class="fas fa-quote-left text-4xl text-white/10 mb-8 reveal"></i>
+            <h3 class="font-serif italic text-3xl md:text-5xl leading-tight mb-10 text-gray-200 reveal">
+                "In a world of disposable technology, we stand for permanence. We believe that true engineering is about the resilience of the machine."
+            </h3>
+            <div class="flex items-center justify-center gap-4 reveal">
+                <div class="w-12 h-12 bg-gray-700 rounded-full overflow-hidden">
+                    <img src="profile.jpg" class="w-full h-full object-cover">
+                </div>
+                <div class="text-left">
+                    <p class="text-sm font-bold text-white">Majeed O.</p>
+                    <p class="text-xs text-electric-blue uppercase tracking-wider">Lead Systems Architect</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="ecosystem" class="py-32 px-6">
+        <div class="max-w-7xl mx-auto">
+            <h2 class="text-xs text-gray-500 uppercase tracking-widest mb-12 reveal">The Ecosystem</h2>
+            <div class="grid md:grid-cols-2 gap-px bg-white/10 border border-white/10 rounded-2xl overflow-hidden reveal">
+                <div class="bg-obsidian p-12 group hover:bg-white/5 transition-colors relative">
+                    <i class="fas fa-wave-square text-3xl mb-6 text-gray-500 group-hover:text-electric-blue transition-colors"></i>
+                    <h3 class="text-xl font-medium text-white mb-2">Signal Processing</h3>
+                    <p class="text-gray-500 leading-relaxed">Optimization of wireless frequencies for zero-latency environments.</p>
+                </div>
+                <div class="bg-obsidian p-12 group hover:bg-white/5 transition-colors relative">
+                    <i class="fas fa-shield-virus text-3xl mb-6 text-gray-500 group-hover:text-electric-blue transition-colors"></i>
+                    <h3 class="text-xl font-medium text-white mb-2">Threat Mitigation</h3>
+                    <p class="text-gray-500 leading-relaxed">Hardware-level firewalls designed to repel intrusive algorithmic attacks.</p>
+                </div>
+                <div class="bg-obsidian p-12 group hover:bg-white/5 transition-colors relative">
+                    <i class="fas fa-memory text-3xl mb-6 text-gray-500 group-hover:text-electric-blue transition-colors"></i>
+                    <h3 class="text-xl font-medium text-white mb-2">Data Forensics</h3>
+                    <p class="text-gray-500 leading-relaxed">Recovery of corrupted sectors using proprietary voltage injection methods.</p>
+                </div>
+                <div class="bg-obsidian p-12 group hover:bg-white/5 transition-colors relative">
+                    <i class="fas fa-server text-3xl mb-6 text-gray-500 group-hover:text-electric-blue transition-colors"></i>
+                    <h3 class="text-xl font-medium text-white mb-2">Server Architecture</h3>
+                    <p class="text-gray-500 leading-relaxed">Custom-built blade servers for high-frequency trading and rendering.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+        <footer class="py-8 border-t border-white/5 bg-charcoal">
+        <div class="max-w-7xl mx-auto px-6 flex flex-col md:flex-row justify-between items-center text-xs text-gray-600">
+            <p>&copy; 2025 Majeed Comparations. Engineered in Lagos.</p>
+            <div class="flex gap-6 mt-4 md:mt-0">
+                <a href="#" class="hover:text-white transition-colors">Legal</a>
+                <a href="#" class="hover:text-white transition-colors">Status</a>
             </div>
         </div>
     </footer>
 
-    <div id="cart-drawer" class="fixed inset-0 z-[60] pointer-events-none">
-        <div id="backdrop" class="absolute inset-0 bg-black/50 backdrop-blur-sm opacity-0 transition-opacity duration-300" onclick="toggleCart()"></div>
-        
-        <div id="drawer" class="absolute top-0 right-0 h-full w-96 bg-[#1c1c1e] shadow-2xl transform translate-x-full transition-transform duration-300 flex flex-col pointer-events-auto border-l border-white/10">
+    <div id="cart-drawer" class="fixed inset-0 z-[70] pointer-events-none">
+        <div id="backdrop" class="absolute inset-0 bg-black/60 backdrop-blur-md opacity-0 transition-opacity duration-300" onclick="toggleCart()"></div>
+        <div id="drawer" class="absolute top-0 right-0 h-full w-[400px] max-w-[85vw] bg-[#0a0a0a] border-l border-white/10 shadow-2xl transform translate-x-full transition-transform duration-500 ease-in-out pointer-events-auto flex flex-col">
             <div class="p-6 border-b border-white/10 flex justify-between items-center">
-                <h2 class="font-medium text-lg">Bag</h2>
-                <button onclick="toggleCart()" class="text-gray-400 hover:text-white"><i class="fas fa-times"></i></button>
+                <h2 class="font-medium text-white">System Configuration</h2>
+                <button onclick="toggleCart()" class="text-gray-500 hover:text-white"><i class="fas fa-times"></i></button>
             </div>
-            
-            <div id="cart-items" class="flex-1 overflow-y-auto p-6 space-y-6">
-                <p class="text-gunmetal text-center mt-10">Your bag is empty.</p>
+            <div id="cart-items" class="flex-1 overflow-y-auto p-6 space-y-4">
+                <p class="text-gray-600 text-center text-sm mt-10">No modules selected.</p>
             </div>
-            
-            <div class="p-6 border-t border-white/10 bg-[#151516]">
-                <div class="flex justify-between text-sm font-medium mb-4 text-gray-300">
-                    <span>Total</span>
-                    <span id="total" class="text-white">$0.00</span>
+            <div class="p-6 border-t border-white/10 bg-[#0f0f10]">
+                <div class="flex justify-between text-sm text-gray-400 mb-4">
+                    <span>Subtotal</span>
+                    <span id="total" class="text-white font-medium">$0.00</span>
                 </div>
-                <button class="w-full bg-apple-blue text-white py-3 rounded-lg font-medium hover:bg-blue-500 transition-colors">Check Out</button>
+                <button class="w-full bg-electric-blue text-white py-4 rounded font-medium hover:bg-blue-600 transition-all shadow-[0_0_20px_rgba(41,151,255,0.3)]">Proceed to Deployment</button>
             </div>
         </div>
     </div>
 
     <script>
-        // High-Quality Unsplash Images (Direct Links)
+        // DATA: Now includes 'specs' array for detailed info
         const products = [
-            {
-                id: 1,
-                name: "MacBook Pro M3",
-                cat: "systems",
-                price: 1599,
-                img: "https://images.unsplash.com/photo-1517336714731-489689fd1ca8?auto=format&fit=crop&q=80&w=800"
+            { 
+                id: 1, 
+                name: "NVIDIA RTX 4090", 
+                price: 1699, 
+                img: "https://images.unsplash.com/photo-1591488320449-011701bb6704?auto=format&fit=crop&q=80&w=800", 
+                badge: "High Performance",
+                specs: ["24GB GDDR6X VRAM", "Ada Lovelace Architecture", "DLSS 3.5 Support", "16,384 CUDA Cores"]
             },
-            {
-                id: 2,
-                name: "NVIDIA RTX 4090",
-                cat: "components",
-                price: 1699,
-                img: "https://images.unsplash.com/photo-1591488320449-011701bb6704?auto=format&fit=crop&q=80&w=800"
+            { 
+                id: 2, 
+                name: "MacBook Pro M3 Max", 
+                price: 3199, 
+                img: "https://images.unsplash.com/photo-1517336714731-489689fd1ca8?auto=format&fit=crop&q=80&w=800", 
+                badge: "Best Seller",
+                specs: ["16-Core CPU", "40-Core GPU", "48GB Unified Memory", "1TB SSD Storage"]
             },
-            {
-                id: 3,
-                name: "Mesh WiFi 6",
-                cat: "components",
-                price: 299,
-                img: "https://images.unsplash.com/photo-1544197150-b99a580bbcbf?auto=format&fit=crop&q=80&w=800"
+            { 
+                id: 3, 
+                name: "Sony Alpha A7IV", 
+                price: 2498, 
+                img: "https://images.unsplash.com/photo-1516035069371-29a1b244cc32?auto=format&fit=crop&q=80&w=800", 
+                badge: "Optics",
+                specs: ["33MP Full-Frame Sensor", "4K 60p Video Recording", "Real-time Eye AF", "15-stop Dynamic Range"]
             },
-            {
-                id: 4,
-                name: "Sony Alpha A7",
-                cat: "systems",
-                price: 2400,
-                img: "https://images.unsplash.com/photo-1516035069371-29a1b244cc32?auto=format&fit=crop&q=80&w=800"
+            { 
+                id: 4, 
+                name: "Ubiquiti Dream Machine", 
+                price: 379, 
+                img: "https://images.unsplash.com/photo-1544197150-b99a580bbcbf?auto=format&fit=crop&q=80&w=800", 
+                badge: "Network",
+                specs: ["Dual-Band Wi-Fi 6", "3.0 Gbps Aggregate Throughput", "Integrated 4-Port Switch", "Advanced Firewall"]
             },
-            {
-                id: 5,
-                name: "iPad Pro 12.9",
-                cat: "systems",
-                price: 1099,
-                img: "https://images.unsplash.com/photo-1544244015-0df4b3ffc6b0?auto=format&fit=crop&q=80&w=800"
+            { 
+                id: 5, 
+                name: "Keychron Q1 Pro", 
+                price: 199, 
+                img: "https://images.unsplash.com/photo-1595225476474-87563907a212?auto=format&fit=crop&q=80&w=800", 
+                badge: "Input",
+                specs: ["CNC Aluminum Body", "Wireless Bluetooth 5.1", "Hot-Swappable Switches", "QMK/VIA Support"]
             },
-            {
-                id: 6,
-                name: "Mechanical Keychron",
-                cat: "components",
-                price: 140,
-                img: "https://images.unsplash.com/photo-1595225476474-87563907a212?auto=format&fit=crop&q=80&w=800"
+            { 
+                id: 6, 
+                name: "Dell UltraSharp 4K", 
+                price: 780, 
+                img: "https://images.unsplash.com/photo-1527443224154-c4a3942d3acf?auto=format&fit=crop&q=80&w=800", 
+                badge: "Display",
+                specs: ["IPS Black Technology", "2000:1 Contrast Ratio", "100% sRGB Color", "USB-C Hub Integration"]
             }
         ];
 
         let cart = [];
 
-        function init(filter = 'all') {
-            const grid = document.getElementById('grid');
-            grid.innerHTML = '';
-            
-            const list = filter === 'all' ? products : products.filter(p => p.cat === filter);
-            
-            list.forEach(p => {
-                grid.innerHTML += `
-                    <div class="group bg-[#1c1c1e] rounded-2xl overflow-hidden cursor-pointer hover:scale-[1.02] transition-transform duration-300">
-                        <div class="h-64 overflow-hidden relative">
-                            <img src="${p.img}" class="w-full h-full object-cover opacity-90 group-hover:opacity-100 transition-opacity">
-                        </div>
-                        <div class="p-6">
-                            <div class="flex justify-between items-start mb-2">
-                                <h4 class="text-white font-medium text-lg">${p.name}</h4>
-                                <span class="text-sm text-white bg-white/10 px-2 py-1 rounded">$${p.price}</span>
-                            </div>
-                            <p class="text-gunmetal text-xs uppercase tracking-wider font-semibold mb-4">${p.cat}</p>
-                            <button onclick="add(${p.id})" class="text-apple-blue text-sm font-medium hover:underline">Add to Bag</button>
-                        </div>
-                    </div>
-                `;
-            });
-        }
+        // RENDER GRID WITH SPECS
+        const grid = document.getElementById('grid');
+        products.forEach(p => {
+            // Generate Specs List HTML
+            let specsHTML = p.specs.map(spec => 
+                `<li class="text-[10px] text-gray-500 flex items-center gap-2"><span class="w-1 h-1 bg-electric-blue rounded-full"></span>${spec}</li>`
+            ).join('');
 
+            grid.innerHTML += `
+                <div class="group relative bg-white/5 rounded-2xl overflow-hidden border border-white/5 hover:border-white/20 transition-all duration-500 reveal">
+                    <div class="absolute top-4 left-4 z-10">
+                        <span class="bg-black/50 backdrop-blur text-[10px] font-bold uppercase tracking-widest text-white px-2 py-1 rounded border border-white/10">${p.badge}</span>
+                    </div>
+                    <div class="h-56 overflow-hidden">
+                        <img src="${p.img}" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105 opacity-80 group-hover:opacity-100">
+                    </div>
+                    <div class="p-6 relative bg-[#0a0a0a]">
+                        <h3 class="text-white font-medium text-lg">${p.name}</h3>
+                        <p class="text-white font-bold text-sm mt-1 mb-4">$${p.price.toLocaleString()}</p>
+                        
+                        <div class="border-t border-white/10 pt-4 mb-2">
+                            <ul class="grid grid-cols-2 gap-y-1 gap-x-2">
+                                ${specsHTML}
+                            </ul>
+                        </div>
+
+                        <button onclick="add(${p.id})" class="w-full mt-4 py-2 bg-white/5 hover:bg-white hover:text-black border border-white/10 rounded text-xs font-medium transition-all">
+                            Add to System
+                        </button>
+                    </div>
+                </div>
+            `;
+        });
+
+        // CART LOGIC
         function add(id) {
             cart.push(products.find(p => p.id === id));
             renderCart();
             toggleCart();
         }
 
-        function remove(idx) {
-            cart.splice(idx, 1);
+        function remove(index) {
+            cart.splice(index, 1);
             renderCart();
         }
 
         function renderCart() {
             const el = document.getElementById('cart-items');
             const totalEl = document.getElementById('total');
-            const dot = document.getElementById('cart-dot');
+            const countEl = document.getElementById('cart-count');
             
-            // Dot indicator
-            dot.style.opacity = cart.length > 0 ? '1' : '0';
+            countEl.innerText = cart.length;
+            countEl.style.opacity = cart.length > 0 ? '1' : '0';
 
-            if (cart.length === 0) {
-                el.innerHTML = '<p class="text-gunmetal text-center mt-10">Your bag is empty.</p>';
+            if(cart.length === 0) {
+                el.innerHTML = '<p class="text-gray-600 text-center text-sm mt-10">No modules selected.</p>';
                 totalEl.innerText = '$0.00';
                 return;
             }
 
             el.innerHTML = '';
             let sum = 0;
-            
             cart.forEach((item, i) => {
                 sum += item.price;
                 el.innerHTML += `
-                    <div class="flex gap-4 items-center animate-fade">
-                        <img src="${item.img}" class="w-16 h-16 object-cover rounded-lg bg-white/5">
+                    <div class="flex gap-4 items-center bg-white/5 p-3 rounded-lg border border-white/5">
+                        <img src="${item.img}" class="w-12 h-12 rounded object-cover">
                         <div class="flex-1">
-                            <h5 class="text-white text-sm font-medium">${item.name}</h5>
-                            <p class="text-gray-500 text-xs">$${item.price}</p>
+                            <p class="text-white text-sm font-medium">${item.name}</p>
+                            <p class="text-gray-500 text-xs">$${item.price.toLocaleString()}</p>
                         </div>
-                        <button onclick="remove(${i})" class="text-gray-500 hover:text-red-400 text-xs">Remove</button>
+                        <button onclick="remove(${i})" class="text-gray-500 hover:text-red-500"><i class="fas fa-times"></i></button>
                     </div>
                 `;
             });
-            
             totalEl.innerText = '$' + sum.toLocaleString();
         }
 
         function toggleCart() {
             const drawer = document.getElementById('drawer');
             const backdrop = document.getElementById('backdrop');
-            const parent = document.getElementById('cart-drawer');
-            
-            const isClosed = parent.classList.contains('pointer-events-none');
-            
-            if (isClosed) {
-                parent.classList.remove('pointer-events-none');
+            const container = document.getElementById('cart-drawer');
+            const isClosed = container.classList.contains('pointer-events-none');
+
+            if(isClosed) {
+                container.classList.remove('pointer-events-none');
                 backdrop.classList.remove('opacity-0');
                 drawer.classList.remove('translate-x-full');
             } else {
-                parent.classList.add('pointer-events-none');
+                container.classList.add('pointer-events-none');
                 backdrop.classList.add('opacity-0');
                 drawer.classList.add('translate-x-full');
             }
         }
 
-        function filter(cat) {
-            init(cat);
+        // Scroll Animation
+        function reveal() {
+            var reveals = document.querySelectorAll(".reveal");
+            for (var i = 0; i < reveals.length; i++) {
+                var windowHeight = window.innerHeight;
+                var elementTop = reveals[i].getBoundingClientRect().top;
+                var elementVisible = 50;
+                if (elementTop < windowHeight - elementVisible) {
+                    reveals[i].classList.add("active");
+                }
+            }
         }
-
-        init();
+        window.addEventListener("scroll", reveal);
+        reveal();
     </script>
 </body>
-    </html>
-    
+</html>
