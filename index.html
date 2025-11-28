@@ -3,11 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Majeed Comparations | Enterprise Tech Solutions</title>
+    <title>Majeed | Enterprise Solutions</title>
     
     <script src="https://cdn.tailwindcss.com"></script>
     
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Outfit:wght@300;500;700&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
     
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
@@ -16,396 +18,303 @@
             theme: {
                 extend: {
                     fontFamily: {
-                        sans: ['Inter', 'sans-serif'],
-                        display: ['Outfit', 'sans-serif'],
+                        // This stack mimics Apple's native font (San Francisco)
+                        sans: ['-apple-system', 'BlinkMacSystemFont', 'Inter', 'Segoe UI', 'Roboto', 'sans-serif'],
                     },
                     colors: {
-                        'tech-dark': '#0b0f19',
-                        'tech-card': '#111827',
-                        'cyan-accent': '#06b6d4',
-                        'blue-glow': '#3b82f6',
+                        // Premium, De-saturated Palette
+                        'rich-black': '#050507',
+                        'charcoal': '#151516',
+                        'apple-blue': '#2997FF', // Apple's exact link blue
+                        'gunmetal': '#86868b',   // Apple's text gray
                     },
                     backgroundImage: {
-                        'hero-pattern': "url('https://images.unsplash.com/photo-1451187580459-43490279c0fa?q=80&w=2072&auto=format&fit=crop')",
+                        'gradient-radial': 'radial-gradient(var(--tw-gradient-stops))',
                     }
                 }
             }
         }
     </script>
     <style>
-        /* Custom Scrollbar */
-        ::-webkit-scrollbar { width: 8px; }
-        ::-webkit-scrollbar-track { background: #0b0f19; }
-        ::-webkit-scrollbar-thumb { background: #1f2937; border-radius: 4px; }
-        ::-webkit-scrollbar-thumb:hover { background: #3b82f6; }
+        /* Apple-style Glass Effect */
+        .glass-panel {
+            background: rgba(21, 21, 22, 0.6);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        }
         
-        .glass {
-            background: rgba(17, 24, 39, 0.7);
-            backdrop-filter: blur(12px);
-            border: 1px solid rgba(255, 255, 255, 0.05);
+        /* Smooth, heavy scrolling like iOS */
+        html { scroll-behavior: smooth; }
+        
+        /* Hide scrollbar but keep functionality */
+        ::-webkit-scrollbar { width: 0px; background: transparent; }
+        
+        /* Subtle Fade In Animation */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
         }
-        .text-glow {
-            text-shadow: 0 0 20px rgba(6, 182, 212, 0.5);
-        }
+        .animate-fade { animation: fadeIn 0.8s ease-out forwards; }
     </style>
 </head>
-<body class="bg-tech-dark text-gray-300 font-sans selection:bg-cyan-accent selection:text-black">
+<body class="bg-rich-black text-white font-sans antialiased selection:bg-apple-blue selection:text-white">
 
-    <nav class="fixed w-full z-50 glass border-b border-white/5 transition-all duration-300" id="navbar">
-        <div class="container mx-auto px-6 py-4 flex justify-between items-center">
-            <div class="flex items-center gap-2">
-                <div class="w-8 h-8 bg-gradient-to-br from-cyan-accent to-blue-glow rounded flex items-center justify-center text-black font-bold font-display text-xl">M</div>
-                <span class="font-display font-bold text-xl tracking-wide text-white">Majeed <span class="text-cyan-accent font-light">Comparations</span></span>
+    <nav class="fixed w-full z-50 glass-panel transition-all duration-300">
+        <div class="max-w-7xl mx-auto px-6 h-14 flex justify-between items-center">
+            <div class="flex items-center gap-1 cursor-pointer">
+                <i class="fas fa-cube text-white text-lg"></i>
+                <span class="font-semibold tracking-tight text-white ml-2">Majeed</span>
             </div>
             
-            <div class="hidden md:flex gap-8 text-sm font-medium">
-                <a href="#services" class="hover:text-cyan-accent transition-colors">Diagnostics</a>
-                <a href="#hardware" class="hover:text-cyan-accent transition-colors">Hardware</a>
-                <a href="#solutions" class="hover:text-cyan-accent transition-colors">Solutions</a>
+            <div class="hidden md:flex gap-10 text-xs font-medium text-gray-300">
+                <a href="#solutions" class="hover:text-white transition-colors">Solutions</a>
+                <a href="#hardware" class="hover:text-white transition-colors">Hardware</a>
+                <a href="#support" class="hover:text-white transition-colors">Support</a>
             </div>
 
             <button onclick="toggleCart()" class="relative group">
-                <div class="p-2 bg-white/5 rounded-full group-hover:bg-cyan-accent/20 transition-colors">
-                    <i class="fas fa-shopping-cart text-white group-hover:text-cyan-accent"></i>
-                </div>
-                <span id="cart-count" class="absolute -top-1 -right-1 bg-blue-glow text-white text-[10px] font-bold w-4 h-4 rounded-full flex items-center justify-center opacity-0 transition-opacity">0</span>
+                <i class="fas fa-bag-shopping text-gray-300 hover:text-white transition-colors"></i>
+                <span id="cart-dot" class="absolute -top-1 -right-1 w-2 h-2 bg-apple-blue rounded-full opacity-0 transition-opacity"></span>
             </button>
         </div>
-                  </nav>
-                      <header class="relative min-h-screen flex items-center justify-center overflow-hidden">
-        <div class="absolute inset-0 bg-hero-pattern bg-cover bg-center opacity-20"></div>
-        <div class="absolute inset-0 bg-gradient-to-t from-tech-dark via-tech-dark/80 to-transparent"></div>
-        
-        <div class="container mx-auto px-6 relative z-10 grid md:grid-cols-2 gap-12 items-center pt-20">
-            <div>
-                <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-cyan-accent/30 bg-cyan-accent/10 text-cyan-accent text-xs font-bold tracking-widest uppercase mb-6">
-                    <span class="w-2 h-2 rounded-full bg-cyan-accent animate-pulse"></span> System Operational
-                </div>
-                <h1 class="font-display text-5xl md:text-7xl font-bold text-white leading-tight mb-6">
-                    Engineering the <br> <span class="text-transparent bg-clip-text bg-gradient-to-r from-cyan-accent to-blue-glow text-glow">Future of Tech.</span>
-                </h1>
-                <p class="text-lg text-gray-400 mb-8 max-w-lg leading-relaxed">
-                    Majeed Comparations delivers enterprise-grade troubleshooting, chip-level repairs, and next-gen hardware infrastructure for the modern world.
-                </p>
-                <div class="flex flex-col sm:flex-row gap-4">
-                    <a href="#hardware" class="px-8 py-3.5 bg-cyan-accent text-black font-bold rounded hover:bg-white transition-all shadow-[0_0_20px_rgba(6,182,212,0.3)] text-center">
-                        Browse Hardware
-                    </a>
-                    <a href="#services" class="px-8 py-3.5 border border-white/20 text-white rounded hover:border-cyan-accent hover:text-cyan-accent transition-all text-center">
-                        Book Diagnostics
-                    </a>
-                </div>
-            </div>
-            
-            <div class="relative hidden md:block">
-                <div class="absolute inset-0 bg-cyan-accent/20 blur-[100px] rounded-full"></div>
-                <img src="https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&fit=crop&q=80&w=800" class="relative z-10 rounded-2xl border border-white/10 shadow-2xl shadow-cyan-accent/20 w-full object-cover h-[500px] grayscale hover:grayscale-0 transition-all duration-700">
-                
-                <div class="absolute -bottom-6 -left-6 glass p-4 rounded-xl border-l-4 border-cyan-accent flex items-center gap-4 animate-bounce duration-[3000ms]">
-                    <div class="bg-green-500/20 p-3 rounded-lg text-green-400"><i class="fas fa-check-circle"></i></div>
-                    <div>
-                        <h4 class="text-white font-bold text-sm">System Status</h4>
-                        <p class="text-xs text-gray-400">All systems optimal</p>
-                    </div>
-                </div>
+    </nav>
+
+    <header class="relative pt-32 pb-20 px-6 overflow-hidden">
+        <div class="max-w-4xl mx-auto text-center relative z-10 animate-fade">
+            <h2 class="text-apple-blue font-semibold text-xl mb-4 tracking-wide">Enterprise Grade.</h2>
+            <h1 class="text-5xl md:text-7xl font-semibold leading-tight mb-6 bg-clip-text text-transparent bg-gradient-to-b from-white to-gray-400">
+                Troubleshooting <br> Reimagined.
+            </h1>
+            <p class="text-gunmetal text-lg md:text-xl max-w-2xl mx-auto mb-10 leading-relaxed">
+                Majeed Comparations provides the diagnostic infrastructure for the next generation of computing. Chip-level precision.
+            </p>
+            <div class="flex gap-4 justify-center">
+                <a href="#hardware" class="bg-apple-blue text-white px-8 py-3 rounded-full text-sm font-medium hover:bg-blue-500 transition-all">Buy Hardware</a>
+                <a href="#solutions" class="text-apple-blue px-8 py-3 text-sm font-medium hover:underline flex items-center gap-1">Learn more <i class="fas fa-chevron-right text-xs"></i></a>
             </div>
         </div>
+        
+        <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[400px] bg-blue-900/20 blur-[120px] rounded-full -z-10"></div>
     </header>
 
-    <section id="services" class="py-24 bg-tech-dark relative">
-        <div class="container mx-auto px-6">
-            <div class="flex justify-between items-end mb-16">
+    <section id="hardware" class="py-20 bg-charcoal">
+        <div class="max-w-7xl mx-auto px-6">
+            <h3 class="text-3xl font-semibold mb-12 text-center">Pro Hardware.</h3>
+            
+            <div class="flex justify-center gap-4 mb-16">
+                <button onclick="filter('all')" class="text-xs font-medium bg-white text-black px-4 py-2 rounded-full">All</button>
+                <button onclick="filter('systems')" class="text-xs font-medium text-gray-400 hover:text-white px-4 py-2 transition-colors">Systems</button>
+                <button onclick="filter('components')" class="text-xs font-medium text-gray-400 hover:text-white px-4 py-2 transition-colors">Components</button>
+            </div>
+
+            <div id="grid" class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+                </div>
+        </div>
+    </section>
+
+    <section id="solutions" class="py-32 px-6 bg-rich-black">
+        <div class="max-w-5xl mx-auto">
+            <h3 class="text-4xl font-semibold mb-16 border-b border-white/10 pb-8">Services.</h3>
+            
+            <div class="grid md:grid-cols-2 gap-12">
                 <div>
-                    <h2 class="font-display text-3xl text-white font-bold mb-2">Technical Services</h2>
-                    <p class="text-gray-500 text-sm">Expert analysis and repair protocols.</p>
+                    <h4 class="text-xl font-medium mb-2 text-white">Diagnostic Integrity</h4>
+                    <p class="text-gunmetal leading-relaxed">We utilize proprietary software to scan logic boards for micro-fractures and voltage irregularities. It’s not just repair; it’s restoration.</p>
                 </div>
-                <div class="h-px bg-white/10 flex-1 ml-10 mb-2"></div>
-            </div>
-
-            <div class="grid md:grid-cols-3 gap-6">
-                <div class="bg-tech-card p-8 rounded-xl border border-white/5 hover:border-cyan-accent/50 transition-colors group cursor-pointer">
-                    <i class="fas fa-microchip text-4xl text-blue-glow mb-6 group-hover:scale-110 transition-transform"></i>
-                    <h3 class="text-xl text-white font-bold mb-3 font-display">Chip-Level Recovery</h3>
-                    <p class="text-gray-400 text-sm leading-relaxed mb-6">Advanced micro-soldering and logic board diagnostics for dead systems and complex circuitry failures.</p>
-                    <span class="text-cyan-accent text-sm font-bold flex items-center gap-2">Initialize Protocol <i class="fas fa-arrow-right"></i></span>
+                <div>
+                    <h4 class="text-xl font-medium mb-2 text-white">Network Architecture</h4>
+                    <p class="text-gunmetal leading-relaxed">From server-side load balancing to mesh WiFi deployment, we build invisible, unbreakable connections for enterprise environments.</p>
                 </div>
-                
-                <div class="bg-tech-card p-8 rounded-xl border border-white/5 hover:border-cyan-accent/50 transition-colors group cursor-pointer">
-                    <i class="fas fa-network-wired text-4xl text-cyan-accent mb-6 group-hover:scale-110 transition-transform"></i>
-                    <h3 class="text-xl text-white font-bold mb-3 font-display">Network Infrastructure</h3>
-                    <p class="text-gray-400 text-sm leading-relaxed mb-6">Enterprise-grade WiFi configuration, server load balancing, and secure firewall implementation.</p>
-                    <span class="text-cyan-accent text-sm font-bold flex items-center gap-2">Initialize Protocol <i class="fas fa-arrow-right"></i></span>
+                <div>
+                    <h4 class="text-xl font-medium mb-2 text-white">Data Recovery</h4>
+                    <p class="text-gunmetal leading-relaxed">Advanced forensic tools allow us to recover lost sectors from SSDs and HDDs that others consider dead.</p>
                 </div>
-
-                <div class="bg-tech-card p-8 rounded-xl border border-white/5 hover:border-cyan-accent/50 transition-colors group cursor-pointer">
-                    <i class="fas fa-cogs text-4xl text-purple-500 mb-6 group-hover:scale-110 transition-transform"></i>
-                    <h3 class="text-xl text-white font-bold mb-3 font-display">System Optimization</h3>
-                    <p class="text-gray-400 text-sm leading-relaxed mb-6">Hardware acceleration, thermal management overhaul, and OS kernel debugging for peak performance.</p>
-                    <span class="text-cyan-accent text-sm font-bold flex items-center gap-2">Initialize Protocol <i class="fas fa-arrow-right"></i></span>
+                <div>
+                    <h4 class="text-xl font-medium mb-2 text-white">System Optimization</h4>
+                    <p class="text-gunmetal leading-relaxed">Kernel-level debugging to ensure your hardware runs at peak thermal and computational efficiency.</p>
                 </div>
             </div>
         </div>
     </section>
-        <section id="hardware" class="py-24 bg-[#0d121f]">
-        <div class="container mx-auto px-6">
-            <h2 class="font-display text-4xl text-white font-bold text-center mb-4">Hardware Inventory</h2>
-            <p class="text-gray-500 text-center mb-16 max-w-2xl mx-auto">High-performance components sourced for reliability and speed.</p>
 
-            <div class="flex justify-center gap-4 mb-12 flex-wrap">
-                <button onclick="renderProducts('all')" class="px-6 py-2 rounded-full bg-cyan-accent/10 text-cyan-accent border border-cyan-accent/50 text-sm font-bold hover:bg-cyan-accent hover:text-black transition-all">All Systems</button>
-                <button onclick="renderProducts('networking')" class="px-6 py-2 rounded-full bg-tech-card text-gray-400 border border-white/5 text-sm font-bold hover:text-white transition-all">Networking</button>
-                <button onclick="renderProducts('components')" class="px-6 py-2 rounded-full bg-tech-card text-gray-400 border border-white/5 text-sm font-bold hover:text-white transition-all">Components</button>
-                <button onclick="renderProducts('gadgets')" class="px-6 py-2 rounded-full bg-tech-card text-gray-400 border border-white/5 text-sm font-bold hover:text-white transition-all">Gadgets</button>
+    <footer class="bg-charcoal py-12 px-6 border-t border-white/5">
+        <div class="max-w-7xl mx-auto text-xs text-gunmetal flex flex-col md:flex-row justify-between items-center gap-4">
+            <p>Copyright © 2025 Majeed Comparations Inc. All rights reserved.</p>
+            <div class="flex gap-6">
+                <a href="#" class="hover:underline">Privacy Policy</a>
+                <a href="#" class="hover:underline">Terms of Use</a>
+                <a href="#" class="hover:underline">Sales and Refunds</a>
             </div>
-
-            <div id="product-grid" class="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
-                </div>
-        </div>
-    </section>
-
-    <section id="solutions" class="py-24 bg-tech-dark border-t border-white/5">
-        <div class="container mx-auto px-6 grid md:grid-cols-2 gap-16 items-center">
-            <div class="relative">
-                <div class="absolute -top-10 -left-10 w-20 h-20 border-l-2 border-t-2 border-cyan-accent"></div>
-                <img src="https://images.unsplash.com/photo-1597424214716-4818d8753239?auto=format&fit=crop&q=80&w=800" class="rounded w-full grayscale hover:grayscale-0 transition-all duration-500">
-                <div class="absolute -bottom-10 -right-10 w-20 h-20 border-r-2 border-b-2 border-cyan-accent"></div>
-            </div>
-            <div>
-                <h2 class="font-display text-3xl text-white font-bold mb-6">Why Majeed Comparations?</h2>
-                <div class="space-y-6">
-                    <div class="flex gap-4">
-                        <div class="w-12 h-12 bg-white/5 rounded flex items-center justify-center shrink-0">
-                            <i class="fas fa-shield-alt text-cyan-accent"></i>
-                        </div>
-                        <div>
-                            <h4 class="text-white font-bold text-lg">Diagnostic Integrity</h4>
-                            <p class="text-gray-400 text-sm">We don't guess. We utilize military-grade diagnostic software to pinpoint hardware failures with 99.9% accuracy.</p>
-                        </div>
-                    </div>
-                    <div class="flex gap-4">
-                        <div class="w-12 h-12 bg-white/5 rounded flex items-center justify-center shrink-0">
-                            <i class="fas fa-rocket text-blue-glow"></i>
-                        </div>
-                        <div>
-                            <h4 class="text-white font-bold text-lg">Speed & Efficiency</h4>
-                            <p class="text-gray-400 text-sm">Time is currency. Our lab is optimized for rapid turnaround without compromising on the quality of the repair.</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-        <footer class="bg-black py-12 border-t border-white/10">
-        <div class="container mx-auto px-6 text-center">
-            <h3 class="font-display text-2xl text-white font-bold mb-2">Majeed Comparations</h3>
-            <p class="text-gray-500 text-sm mb-6">Advancing Human Capability Through Technology.</p>
-            <div class="flex justify-center gap-6 text-gray-400 mb-8">
-                <i class="fab fa-twitter hover:text-cyan-accent cursor-pointer"></i>
-                <i class="fab fa-linkedin hover:text-cyan-accent cursor-pointer"></i>
-                <i class="fab fa-instagram hover:text-cyan-accent cursor-pointer"></i>
-            </div>
-            <p class="text-gray-600 text-xs">&copy; 2025 Majeed Comparations. All Systems Operational.</p>
         </div>
     </footer>
 
     <div id="cart-drawer" class="fixed inset-0 z-[60] pointer-events-none">
-        <div class="absolute inset-0 bg-black/60 backdrop-blur-sm opacity-0 transition-opacity duration-300" id="cart-backdrop" onclick="toggleCart()"></div>
-        <div class="absolute top-0 right-0 h-full w-80 bg-[#111827] border-l border-white/10 shadow-2xl transform translate-x-full transition-transform duration-300 flex flex-col pointer-events-auto" id="cart-content">
+        <div id="backdrop" class="absolute inset-0 bg-black/50 backdrop-blur-sm opacity-0 transition-opacity duration-300" onclick="toggleCart()"></div>
+        
+        <div id="drawer" class="absolute top-0 right-0 h-full w-96 bg-[#1c1c1e] shadow-2xl transform translate-x-full transition-transform duration-300 flex flex-col pointer-events-auto border-l border-white/10">
             <div class="p-6 border-b border-white/10 flex justify-between items-center">
-                <h2 class="text-white font-bold font-display text-xl">System Cart</h2>
+                <h2 class="font-medium text-lg">Bag</h2>
                 <button onclick="toggleCart()" class="text-gray-400 hover:text-white"><i class="fas fa-times"></i></button>
             </div>
-            <div id="cart-items-container" class="flex-1 overflow-y-auto p-6 space-y-4">
-                <p class="text-gray-500 text-center mt-10">No components selected.</p>
+            
+            <div id="cart-items" class="flex-1 overflow-y-auto p-6 space-y-6">
+                <p class="text-gunmetal text-center mt-10">Your bag is empty.</p>
             </div>
-            <div class="p-6 border-t border-white/10 bg-[#0b0f19]">
-                <div class="flex justify-between text-white font-bold mb-4">
-                    <span>Total Output</span>
-                    <span id="cart-total" class="text-cyan-accent">$0.00</span>
+            
+            <div class="p-6 border-t border-white/10 bg-[#151516]">
+                <div class="flex justify-between text-sm font-medium mb-4 text-gray-300">
+                    <span>Total</span>
+                    <span id="total" class="text-white">$0.00</span>
                 </div>
-                <button class="w-full py-3 bg-cyan-accent text-black font-bold rounded hover:bg-white transition-colors">
-                    Process Transaction
-                </button>
+                <button class="w-full bg-apple-blue text-white py-3 rounded-lg font-medium hover:bg-blue-500 transition-colors">Check Out</button>
             </div>
         </div>
     </div>
 
     <script>
-        // --- 1. PRODUCT DATABASE ---
-        const inventory = [
+        // High-Quality Unsplash Images (Direct Links)
+        const products = [
             {
                 id: 1,
-                name: "RTX 4090 Graphics Unit",
-                category: "components",
+                name: "MacBook Pro M3",
+                cat: "systems",
                 price: 1599,
-                image: "https://images.unsplash.com/photo-1591488320449-011701bb6704?auto=format&fit=crop&q=80&w=600",
-                spec: "24GB GDDR6X"
+                img: "https://images.unsplash.com/photo-1517336714731-489689fd1ca8?auto=format&fit=crop&q=80&w=800"
             },
             {
                 id: 2,
-                name: "Mesh WiFi 6 System",
-                category: "networking",
-                price: 299,
-                image: "https://images.unsplash.com/photo-1544197150-b99a580bbcbf?auto=format&fit=crop&q=80&w=600",
-                spec: "Gigabit Speed"
+                name: "NVIDIA RTX 4090",
+                cat: "components",
+                price: 1699,
+                img: "https://images.unsplash.com/photo-1591488320449-011701bb6704?auto=format&fit=crop&q=80&w=800"
             },
             {
                 id: 3,
-                name: "Ryzen 9 7950X",
-                category: "components",
-                price: 699,
-                image: "https://images.unsplash.com/photo-1555618520-2c70a02798e9?auto=format&fit=crop&q=80&w=600",
-                spec: "16-Core / 32-Thread"
+                name: "Mesh WiFi 6",
+                cat: "components",
+                price: 299,
+                img: "https://images.unsplash.com/photo-1544197150-b99a580bbcbf?auto=format&fit=crop&q=80&w=800"
             },
             {
                 id: 4,
-                name: "Sony Alpha a7 IV",
-                category: "gadgets",
-                price: 2498,
-                image: "https://images.unsplash.com/photo-1516035069371-29a1b244cc32?auto=format&fit=crop&q=80&w=600",
-                spec: "33MP Full-Frame"
+                name: "Sony Alpha A7",
+                cat: "systems",
+                price: 2400,
+                img: "https://images.unsplash.com/photo-1516035069371-29a1b244cc32?auto=format&fit=crop&q=80&w=800"
             },
             {
                 id: 5,
-                name: "Smart Security Cam",
-                category: "gadgets",
-                price: 129,
-                image: "https://images.unsplash.com/photo-1558002038-10917738179d?auto=format&fit=crop&q=80&w=600",
-                spec: "4K Night Vision"
+                name: "iPad Pro 12.9",
+                cat: "systems",
+                price: 1099,
+                img: "https://images.unsplash.com/photo-1544244015-0df4b3ffc6b0?auto=format&fit=crop&q=80&w=800"
             },
             {
                 id: 6,
-                name: "Enterprise Switch",
-                category: "networking",
-                price: 450,
-                image: "https://images.unsplash.com/photo-1551703599-6b3e8379aa8b?auto=format&fit=crop&q=80&w=600",
-                spec: "24-Port Managed"
-            },
-            {
-                id: 7,
-                name: "VR Headset Pro",
-                category: "gadgets",
-                price: 999,
-                image: "https://images.unsplash.com/photo-1622979135225-d2ba269fb1bd?auto=format&fit=crop&q=80&w=600",
-                spec: "8K Resolution"
-            },
-            {
-                id: 8,
-                name: "DDR5 RAM Kit",
-                category: "components",
-                price: 189,
-                image: "https://images.unsplash.com/photo-1562976540-1502c2145186?auto=format&fit=crop&q=80&w=600",
-                spec: "64GB 6000MHz"
+                name: "Mechanical Keychron",
+                cat: "components",
+                price: 140,
+                img: "https://images.unsplash.com/photo-1595225476474-87563907a212?auto=format&fit=crop&q=80&w=800"
             }
         ];
 
         let cart = [];
 
-        // --- 2. RENDER LOGIC ---
-        function renderProducts(filter = 'all') {
-            const grid = document.getElementById('product-grid');
+        function init(filter = 'all') {
+            const grid = document.getElementById('grid');
             grid.innerHTML = '';
-
-            const filtered = filter === 'all' 
-                ? inventory 
-                : inventory.filter(p => p.category === filter);
-
-            filtered.forEach(item => {
+            
+            const list = filter === 'all' ? products : products.filter(p => p.cat === filter);
+            
+            list.forEach(p => {
                 grid.innerHTML += `
-                    <div class="group bg-tech-card rounded-xl overflow-hidden border border-white/5 hover:border-cyan-accent/50 transition-all duration-300 hover:-translate-y-2">
-                        <div class="h-48 overflow-hidden relative">
-                            <img src="${item.image}" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110">
-                            <div class="absolute top-2 right-2 bg-black/60 backdrop-blur px-2 py-1 rounded text-[10px] text-cyan-accent font-bold uppercase border border-cyan-accent/20">
-                                ${item.category}
-                            </div>
+                    <div class="group bg-[#1c1c1e] rounded-2xl overflow-hidden cursor-pointer hover:scale-[1.02] transition-transform duration-300">
+                        <div class="h-64 overflow-hidden relative">
+                            <img src="${p.img}" class="w-full h-full object-cover opacity-90 group-hover:opacity-100 transition-opacity">
                         </div>
-                        <div class="p-5">
+                        <div class="p-6">
                             <div class="flex justify-between items-start mb-2">
-                                <div>
-                                    <h3 class="text-white font-bold font-display text-lg leading-tight">${item.name}</h3>
-                                    <p class="text-xs text-gray-500 mt-1">${item.spec}</p>
-                                </div>
+                                <h4 class="text-white font-medium text-lg">${p.name}</h4>
+                                <span class="text-sm text-white bg-white/10 px-2 py-1 rounded">$${p.price}</span>
                             </div>
-                            <div class="flex justify-between items-center mt-4">
-                                <span class="text-xl font-bold text-blue-glow">$${item.price}</span>
-                                <button onclick="addToCart(${item.id})" class="w-8 h-8 rounded bg-white/10 flex items-center justify-center text-white hover:bg-cyan-accent hover:text-black transition-colors">
-                                    <i class="fas fa-plus"></i>
-                                </button>
-                            </div>
+                            <p class="text-gunmetal text-xs uppercase tracking-wider font-semibold mb-4">${p.cat}</p>
+                            <button onclick="add(${p.id})" class="text-apple-blue text-sm font-medium hover:underline">Add to Bag</button>
                         </div>
                     </div>
                 `;
             });
         }
 
-        // --- 3. CART FUNCTIONS ---
-        function addToCart(id) {
-            const item = inventory.find(i => i.id === id);
-            cart.push(item);
-            updateCart();
-            toggleCart(true); // Auto open
+        function add(id) {
+            cart.push(products.find(p => p.id === id));
+            renderCart();
+            toggleCart();
         }
 
-        function removeFromCart(index) {
-            cart.splice(index, 1);
-            updateCart();
+        function remove(idx) {
+            cart.splice(idx, 1);
+            renderCart();
         }
 
-        function updateCart() {
-            // Count
-            const countEl = document.getElementById('cart-count');
-            countEl.innerText = cart.length;
-            countEl.style.opacity = cart.length > 0 ? '1' : '0';
+        function renderCart() {
+            const el = document.getElementById('cart-items');
+            const totalEl = document.getElementById('total');
+            const dot = document.getElementById('cart-dot');
+            
+            // Dot indicator
+            dot.style.opacity = cart.length > 0 ? '1' : '0';
 
-            // Items
-            const container = document.getElementById('cart-items-container');
-            container.innerHTML = '';
+            if (cart.length === 0) {
+                el.innerHTML = '<p class="text-gunmetal text-center mt-10">Your bag is empty.</p>';
+                totalEl.innerText = '$0.00';
+                return;
+            }
+
+            el.innerHTML = '';
+            let sum = 0;
             
-            let total = 0;
-            
-            if(cart.length === 0) {
-                 container.innerHTML = '<p class="text-gray-500 text-center mt-10 text-sm">System Empty.</p>';
-            } else {
-                cart.forEach((item, index) => {
-                    total += item.price;
-                    container.innerHTML += `
-                        <div class="flex gap-4 items-center bg-white/5 p-3 rounded border border-white/5">
-                            <img src="${item.image}" class="w-12 h-12 object-cover rounded">
-                            <div class="flex-1">
-                                <h4 class="text-white text-sm font-bold">${item.name}</h4>
-                                <p class="text-cyan-accent text-xs">$${item.price}</p>
-                            </div>
-                            <button onclick="removeFromCart(${index})" class="text-gray-500 hover:text-red-500"><i class="fas fa-trash"></i></button>
+            cart.forEach((item, i) => {
+                sum += item.price;
+                el.innerHTML += `
+                    <div class="flex gap-4 items-center animate-fade">
+                        <img src="${item.img}" class="w-16 h-16 object-cover rounded-lg bg-white/5">
+                        <div class="flex-1">
+                            <h5 class="text-white text-sm font-medium">${item.name}</h5>
+                            <p class="text-gray-500 text-xs">$${item.price}</p>
                         </div>
-                    `;
-                });
-            }
-
-            document.getElementById('cart-total').innerText = '$' + total.toFixed(2);
+                        <button onclick="remove(${i})" class="text-gray-500 hover:text-red-400 text-xs">Remove</button>
+                    </div>
+                `;
+            });
+            
+            totalEl.innerText = '$' + sum.toLocaleString();
         }
 
-        // --- 4. UI INTERACTION ---
-        function toggleCart(forceOpen = null) {
-            const drawer = document.getElementById('cart-drawer');
-            const backdrop = document.getElementById('cart-backdrop');
-            const content = document.getElementById('cart-content');
-
-            const isOpen = !drawer.classList.contains('pointer-events-none');
-            const shouldOpen = forceOpen !== null ? forceOpen : !isOpen;
-
-            if (shouldOpen) {
-                drawer.classList.remove('pointer-events-none');
+        function toggleCart() {
+            const drawer = document.getElementById('drawer');
+            const backdrop = document.getElementById('backdrop');
+            const parent = document.getElementById('cart-drawer');
+            
+            const isClosed = parent.classList.contains('pointer-events-none');
+            
+            if (isClosed) {
+                parent.classList.remove('pointer-events-none');
                 backdrop.classList.remove('opacity-0');
-                content.classList.remove('translate-x-full');
+                drawer.classList.remove('translate-x-full');
             } else {
-                drawer.classList.add('pointer-events-none');
+                parent.classList.add('pointer-events-none');
                 backdrop.classList.add('opacity-0');
-                content.classList.add('translate-x-full');
+                drawer.classList.add('translate-x-full');
             }
         }
 
-        // Initialize
-        renderProducts();
+        function filter(cat) {
+            init(cat);
+        }
+
+        init();
     </script>
 </body>
-</html>
+    </html>
+    
